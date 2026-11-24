@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Augustine Wisely Bezalel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#F7F5F0;--panel:#FFFFFF;--ink:#15171C;--muted:#6B6F76;--rule:#DCD7CD;
+  --accent:#0E6F74;--accent-2:#C2572B;
+  --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1113;--panel:#15181B;--ink:#E9E7E2;--muted:#8E949C;
+    --rule:#262A2F;--accent:#4FB3B8;--accent-2:#E08A5B;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1113;--panel:#15181B;--ink:#E9E7E2;--muted:#8E949C;
+  --rule:#262A2F;--accent:#4FB3B8;--accent-2:#E08A5B;color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--paper);color:var(--ink);font-family:var(--sans);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:clamp(24px,5vw,48px);
+  line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(20px,3.4vw,32px)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-size:clamp(26px,5.2vw,40px);line-height:1.08;margin:6px 0 0;font-weight:600;letter-spacing:-.02em;text-wrap:balance}
+.standfirst{margin:10px 0 0;max-width:58ch;color:var(--muted);font-size:clamp(14px,1.9vw,16px)}
+.standfirst b{color:var(--ink);font-weight:500}
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:clamp(14px,2.4vw,20px)}
+.panel-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.tag{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--paper);background:var(--ink);padding:2px 6px;border-radius:2px}
+.panel-head h2{margin:0;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:var(--mono)}
+.plot{position:relative;width:100%;aspect-ratio:16/8;max-width:100%;min-height:210px}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.node{position:absolute;transform:translate(-50%,-50%);background:none;border:0;padding:8px 9px;margin:0;cursor:pointer;
+  font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--muted);white-space:nowrap;border-radius:3px;transition:color .18s ease}
+.node:hover{color:var(--ink)}
+.node[aria-current="true"]{color:var(--accent);font-weight:500}
+.node:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:baseline;margin-top:14px}
+.legend .k{font-family:var(--mono);font-size:12px;color:var(--accent-2);white-space:nowrap}
+.legend h3{margin:0;font-size:clamp(15px,2.2vw,17px);font-weight:600;letter-spacing:-.01em}
+.legend p{grid-column:2;margin:2px 0 0;font-size:14.5px;color:var(--muted);max-width:60ch;min-width:0}
+.legend p em{color:var(--ink);font-style:normal;font-weight:500}
+.bring{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.bring li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;font-size:14.5px;min-width:0}
+.bring span{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.08em}
+footer{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-top:4px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+footer a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+footer a:hover{border-bottom-color:var(--accent)}
+.mail{display:inline-flex;align-items:center;gap:8px}
+.mail code{font-family:var(--mono);font-size:12.5px;color:var(--ink);user-select:all}
+.copy{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--rule);
+  color:var(--muted);padding:3px 7px;border-radius:2px;cursor:pointer}
+.copy:hover{color:var(--ink);border-color:var(--muted)}
+nav{display:flex;gap:2px;border-bottom:1px solid var(--rule);margin-top:4px}
+nav button{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:none;border:0;
+  border-bottom:2px solid transparent;color:var(--muted);padding:8px 2px;margin-right:22px;cursor:pointer;transition:color .16s ease}
+nav button:hover{color:var(--ink)}
+nav button[aria-current="true"]{color:var(--ink);border-bottom-color:var(--accent-2)}
+nav button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.page{display:flex;flex-direction:column;gap:clamp(20px,3.4vw,32px)}
+.page[hidden]{display:none}
+.tracks{display:grid;gap:0}
+.track{border-top:1px solid var(--rule)}
+.track:first-child{border-top:0}
+.track>button{width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:baseline;background:none;border:0;
+  padding:13px 0;margin:0;cursor:pointer;text-align:left;color:inherit;font-family:inherit}
+.track>button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.track .num{font-family:var(--mono);font-size:11px;color:var(--accent-2);letter-spacing:.08em}
+.track .ttl{font-size:clamp(15px,2.3vw,18px);font-weight:600;letter-spacing:-.012em;min-width:0;line-height:1.3}
+.track .sting{display:block;margin-top:3px;font-size:14px;font-weight:400;color:var(--muted);letter-spacing:0}
+.track[data-open="true"] .sting{color:var(--ink)}
+.track .chev{font-family:var(--mono);font-size:13px;color:var(--muted);transition:transform .2s ease}
+.track[data-open="true"] .chev{transform:rotate(45deg)}
+.track[data-open="true"] .ttl{color:var(--accent)}
+.body{display:none;padding:0 0 15px 0;margin-left:28px}
+.track[data-open="true"] .body{display:block}
+.body p{margin:0 0 9px;font-size:14.5px;color:var(--muted);max-width:62ch}
+.body p:last-child{margin-bottom:0}
+.body em{color:var(--ink);font-style:normal;font-weight:500}
+.body .why{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--accent);border-left:2px solid var(--rule);padding-left:10px}
+.cite{font-family:var(--mono);font-size:11px;line-height:1.55;color:var(--muted);margin:0 0 14px;max-width:70ch}
+.cite i{color:var(--ink);font-style:normal}
+.qfig{position:relative;width:100%;aspect-ratio:16/5.4;min-height:148px;margin-bottom:4px}
+.qfig canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.capwrap{position:relative;width:100%;aspect-ratio:16/7;min-height:200px}
+.capwrap canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.controls{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center;margin-top:14px}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+.seg button{font-family:var(--mono);font-size:11px;letter-spacing:.06em;background:none;border:0;color:var(--muted);padding:8px 11px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.hint{font-family:var(--mono);font-size:11.5px;color:var(--accent-2);letter-spacing:.02em;flex-basis:100%;min-height:1.4em}
+.mine{margin:0 0 13px;font-size:14px;color:var(--muted);max-width:62ch;border-left:2px solid var(--accent-2);padding-left:11px}
+.mine b{color:var(--ink);font-weight:500}
+.eq{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.02em}
+.prose p{margin:0 0 9px;font-size:14.5px;max-width:64ch}
+.prose p:last-child{margin-bottom:0}
+.prose p.lead{font-size:14.5px;font-weight:400;letter-spacing:0}
+.prose strong{font-weight:500}
+.caveat{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;color:var(--muted);margin:11px 0 0;max-width:66ch}
+@media (max-width:520px){
+  .legend{grid-template-columns:1fr;gap:2px}
+  .legend p{grid-column:1}
+  .node{font-size:10px;padding:7px}
+  nav button{margin-right:16px;font-size:10px}
+  .body{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">for dr catherine dong yanhong · nus medicine</p>
+    <h1>Augustine Wisely Bezalel</h1>
+    <p class="standfirst" id="sf">Three questions I came away with from the heart-brain work, and where I think I could contribute.</p>
+  </header>
+
+  <nav>
+    <button data-p="1" aria-current="true">01 · what i'd contribute</button>
+    <button data-p="2">02 · how i read your result</button>
+    <button data-p="3">03 · what i've done</button>
+  </nav>
+
+  <div class="page" id="p1">
+  <section class="panel">
+    <div class="panel-head"><span class="tag">A</span><h2>three questions, after reading closely · tap one</h2></div>
+    <p class="cite">from <i>Cognitive impairment in Asian patients with heart failure: prevalence, biomarkers, clinical correlates, and outcomes</i> &nbsp;·&nbsp; Dong et al., European Journal of Heart Failure 21(5), 2019 &nbsp;·&nbsp; the 2022 pilot in Chinese heart failure patients, Frontiers in Cardiovascular Medicine &nbsp;·&nbsp; and projects 10.10 and 10.11 on the NUS Medicine list.</p>
+    <div class="qfig"><canvas id="qf" aria-label="schematic of the selected question" role="img"></canvas></div>
+    <div class="tracks">
+
+      <div class="track" data-open="true">
+        <button aria-expanded="true"><span class="num">01</span><span class="ttl">MMSE was normal in the impaired patients. MoCA was not.<span class="sting">the instrument decided whether the finding existed. what decides it one level further down?</span></span><span class="chev">+</span></button>
+        <div class="body">
+          <p>In the 2019 cohort, patients classified as cognitively impaired had MMSE scores inside the normal range while their MoCA separated cleanly: 21.3 against 25.2, p &lt; 0.0001. The impairment did not appear or disappear. <em>The instrument did.</em> MMSE had run out of headroom and MoCA had not.</p>
+          <p>That is a measurement result as much as a clinical one, and it is the reason the paper mattered. But the same logic keeps going. MoCA is a 30-point ordinal score with its own ceiling, and the follow-up review found the proposed cutoffs had acceptable sensitivity and suboptimal specificity, which is the signature of a scale being asked for more resolution than it has.</p>
+          <p>So the question I keep arriving at is what sits one rung below MoCA in the same way MoCA sat below MMSE.</p>
+          <p class="why">the ceiling moved once. that is evidence it can move again.</p>
+        </div>
+      </div>
+
+      <div class="track">
+        <button aria-expanded="false"><span class="num">02</span><span class="ttl">81% prevalence of cognitive impairment in the pilot cohort.<span class="sting">at eighty-one percent, how much variance is left for a binary label to explain?</span></span><span class="chev">+</span></button>
+        <div class="body">
+          <p>The 2022 pilot found cognitive impairment in 81% of patients by MoCA below 25, MMSE below 28, or both, with age, NYHA class and atrial fibrillation independently associated.</p>
+          <p>A prevalence that high is clinically striking and statistically awkward at the same time. <em>A dichotomous label at 81% has spent almost all of its variance before any comparison begins</em>, which caps how strongly it can correlate with anything, including the biomarkers you would most want it to track.</p>
+          <p>The continuous MoCA score keeps more of that variance than the binary label does. A continuous measure of the brain tissue itself would keep more again. The next tab is that arithmetic, run three ways on the same simulated truth.</p>
+          <p class="why">prevalence this high is an argument for a finer outcome, not a bigger n.</p>
+        </div>
+      </div>
+
+      <div class="track">
+        <button aria-expanded="false"><span class="num">03</span><span class="ttl">The heart side has NT-proBNP. The brain side has a questionnaire.<span class="sting">the mechanism you name is hypoperfusion. that is a claim about brain tissue, and brain tissue is measurable.</span></span><span class="chev">+</span></button>
+        <div class="body">
+          <p>On one side of the heart-brain link sit NT-proBNP, a continuous assay, plus NYHA class and ejection fraction. On the other side sit MoCA and MMSE. The two halves of the relationship are not measured to the same standard, and the weaker half is the brain.</p>
+          <p>The mechanism in your own framing is hypoperfusion: an underperforming heart starving brain tissue of oxygenated blood. <em>That is a structural, vascular claim, and it can be imaged directly</em> rather than inferred from a cognitive score downstream of it.</p>
+          <p>This is the part I have actually done. My project at University Medical Center Groningen was a heart-brain study with imaging at both ends: an automated FSL and Luigi pipeline relating arterial calcification to white-matter injury measured by PSMD, a continuous rater-free marker computed from diffusion MRI, run unattended across a cohort.</p>
+          <p class="why">my UMCG project was a heart-brain study. this is the same question with a different organ upstream.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel prose">
+    <div class="panel-head"><span class="tag">B</span><h2>why this group</h2></div>
+    <p class="lead">Four years of the same problem wearing different clothes: getting a trustworthy number out of a signal that was not built to give one. A dog&rsquo;s bark. A child&rsquo;s gaze. A radio wave off a moving body. Arterial calcium against white matter.</p>
+    <p class="lead">Your programme is the first I have found where the question I worked on at Groningen is the clinical question itself, rather than a methods detail inside someone else&rsquo;s study.</p>
+  </section>
+  </div>
+
+  <div class="page" id="p2" hidden>
+  <section class="panel">
+    <div class="panel-head"><span class="tag">C</span><h2>the same truth, measured three ways</h2></div>
+    <p class="mine"><b>One simulated cohort, one underlying brain-injury variable, one outcome.</b> The only thing that changes between the three bars is the instrument used to measure the brain. The binary label throws away the most, the 30-point score keeps more, the continuous marker keeps nearly all of it. Nothing about the patients changed. <span class="eq">r&sup2; = explained variance</span></p>
+    <div class="capwrap"><canvas id="cap" aria-label="variance explained by a binary label, an ordinal score, and a continuous marker" role="img"></canvas></div>
+    <div class="controls">
+      <span class="seg" role="group" aria-label="prevalence of impairment">
+        <button id="p-50" aria-pressed="false">50% prevalence</button>
+        <button id="p-81" aria-pressed="true">81%, as observed</button>
+      </span>
+      <span class="seg" role="group" aria-label="resample">
+        <button id="redraw" aria-pressed="false">new cohort</button>
+      </span>
+      <span class="hint" id="hint">at 81% prevalence the binary label keeps the least of the signal.</span>
+    </div>
+    <p class="caveat">Simulation, not cohort data. A latent brain-injury variable drives a continuous outcome; the ordinal arm rounds it to a 30-point score and the binary arm thresholds that score at the stated prevalence. Drawn to show what each instrument discards.</p>
+  </section>
+
+  <section class="panel prose">
+    <div class="panel-head"><span class="tag">D</span><h2>what the reading buys</h2></div>
+    <p>If the binary label is the outcome, then <strong>a real association can look weak purely because the outcome was dichotomised</strong> at a prevalence where almost everyone falls on one side. That is a reporting choice, not a property of the disease.</p>
+    <p>Keeping MoCA continuous is free. It costs nothing to collect, it is already in the dataset, and it recovers a meaningful share of what the threshold discards.</p>
+    <p>Adding a continuous imaging marker costs a sequence and a pipeline, and recovers more again. <strong>It also moves the measurement to the organ the mechanism is actually about</strong>, instead of to a cognitive test several steps downstream of it.</p>
+    <p>And it changes what the study can claim. A cognitive score tells you a patient is impaired. A white-matter measure tells you something about why, which is what a translational programme from mechanism to trial eventually needs.</p>
+  </section>
+  </div>
+
+  <div class="page" id="p3" hidden>
+
+  <section class="panel">
+    <div class="panel-head"><span class="tag">E</span><h2>state space of prior work</h2></div>
+    <div class="plot">
+      <canvas id="c"></canvas>
+      <button class="node" data-i="0" aria-current="true">pipelines at scale</button>
+      <button class="node" data-i="1">networks in dementia</button>
+      <button class="node" data-i="2">bodies, no sensors</button>
+      <button class="node" data-i="3">states from signals</button>
+    </div>
+    <div class="legend">
+      <span class="k" id="k">01</span>
+      <h3 id="t">pipelines at scale</h3>
+      <p id="d">An automated FSL and Luigi diffusion-imaging pipeline at <em>UMCG Groningen</em>, run unattended across a cohort.</p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><span class="tag">F</span><h2>what i'd bring</h2></div>
+    <ul class="bring">
+      <li><span>01</span><div>A diffusion pipeline relating vascular burden to brain white-matter injury, built in FSL and Luigi at UMCG and run unattended across a cohort. That is your heart-brain question with a different organ upstream.</div></li>
+      <li><span>02</span><div>Resting-state fMRI analysis including subject-specific haemodynamic response estimation, from my ADNI thesis. Directly relevant where perfusion is the proposed mechanism.</div></li>
+      <li><span>03</span><div>Statistical care about outcome coding: what thresholding costs, what ordinal scales can carry, and how to report an effect without a cut-point deciding it for you.</div></li>
+      <li><span>04</span><div>Python and R daily, plus acquisition-side literacy from R&amp;D at Siemens Healthineers for the questions that turn out to be about the scanner.</div></li>
+    </ul>
+  </section>
+  </div>
+
+  <footer>
+    <span class="mail"><code>augustine0521@gmail.com</code><button class="copy" id="cp">copy</button></span>
+    <a href="https://www.linkedin.com/in/augustine-w-bezalel-5a985a250" target="_blank" rel="noopener">linkedin</a>
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  {k:"01", t:"pipelines at scale",
+   d:'An automated FSL and Luigi diffusion-imaging pipeline at <em>UMCG Groningen</em>, run unattended across a cohort, relating arterial calcification to white-matter injury measured by PSMD, a continuous rater-free small-vessel-disease marker derived from DTI.'},
+  {k:"02", t:"networks in dementia",
+   d:'Final-year thesis: subject-specific haemodynamic response functions estimated from resting-state fMRI in the <em>ADNI</em> cohort, treating the vascular component of the BOLD signal as a measurement in its own right rather than a nuisance to regress away.'},
+  {k:"03", t:"bodies, no sensors",
+   d:'Gait disorders detected from Wi-Fi channel state information, nothing worn and nothing seen, validated on participants the model had never encountered. <em>IEEE SPS SIGMA grant (USD 4,000) with Dr Deepak Mishra, UNSW Sydney; submitted to ICASSP 2027</em>.'},
+  {k:"04", t:"states from signals",
+   d:'Affect from canine vocalisations (<em>41st World Veterinary Association Congress, Tokyo</em>) and a webcam gaze-tracking system for attention assessment in children with ASD (<em>finalist, NeuroDesign in HRI</em>). Hands-on MRI, PET and hybrid PET/MRI at <em>NIMHANS</em>; now in R&amp;D at <em>Siemens Healthineers</em>.'}
+];
+const SF = ["Three questions I came away with from the heart-brain work, and where I think I could contribute.","What a <b>30-point screening score</b> can and cannot carry, at 81% prevalence.","Four years of turning signals into continuous, rater-free measurements."];
+
+const MONO = '"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace';
+function chip(c,x,y,w,h,label,mode){
+  c.save();
+  if(mode==="ghost"){
+    c.setLineDash([3,3]); c.strokeStyle=col.accent2; c.globalAlpha=.75;
+    c.strokeRect(x,y,w,h); c.setLineDash([]);
+    c.fillStyle=col.accent2;
+  }else{
+    c.strokeStyle=col.rule; c.strokeRect(x,y,w,h);
+    c.fillStyle = mode==="hot" ? col.accent : col.muted;
+  }
+  c.font="10.5px "+MONO; c.textAlign="center"; c.textBaseline="middle";
+  c.fillText(label,x+w/2,y+h/2+0.5);
+  c.restore();
+}
+function lab(c,x,y,t,color,size,align){
+  c.save(); c.font=(size||10.5)+"px "+MONO; c.textAlign=align||"left";
+  c.textBaseline="middle"; c.fillStyle=color||col.muted; c.fillText(t,x,y); c.restore();
+}
+function rng(seed){ let s=seed>>>0; return ()=>{ s=(s*1664525+1013904223)>>>0; return s/4294967296; }; }
+function gauss(r){ let u=0,v=0; while(!u)u=r(); while(!v)v=r(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+function pear(a,b){
+  const n=a.length, ma=a.reduce((x,y)=>x+y,0)/n, mb=b.reduce((x,y)=>x+y,0)/n;
+  let sa=0,sb=0,sab=0;
+  for(let i=0;i<n;i++){ const da=a[i]-ma, db=b[i]-mb; sa+=da*da; sb+=db*db; sab+=da*db; }
+  return sab/Math.sqrt(sa*sb||1);
+}
+
+
+const qc=document.getElementById("qf"), qx=qc.getContext("2d");
+let qw=0,qh=0,qsel=0,qT=0,qm=0;
+function qResize(){ const r=fitCanvas(qc); if(r){ qw=r.width; qh=r.height; } }
+function qSelect(i){ if(i!==qsel){ qsel=i; qm=0; } }
+function qFrame(){
+  if(!qw) return;
+  qT+=dt; qm=Math.min(1,qm+dt*4);
+  qx.clearRect(0,0,qw,qh);
+  qx.globalAlpha=.25+.75*qm;
+  if(qsel===0) qCeil(); else if(qsel===1) qPrev(); else qSides();
+  qx.globalAlpha=1;
+}
+function qCeil(){
+  lab(qx,qw*0.04,qh*0.14,"two scales, one patient group",col.ink,11);
+  const rows=[{n:"MMSE",lo:0.93,hi:0.97,c:"flat"},{n:"MoCA",lo:0.71,hi:0.84,c:"sep"}];
+  rows.forEach((r,i)=>{
+    const y=qh*(0.42+i*0.30), x0=qw*0.17, x1=qw*0.93;
+    lab(qx,qw*0.04,y,r.n,col.ink,11);
+    qx.strokeStyle=col.rule; qx.lineWidth=1;
+    qx.beginPath(); qx.moveTo(x0,y); qx.lineTo(x1,y); qx.stroke();
+    lab(qx,x1,y-qh*0.16,"ceiling",col.muted,9.5,"right");
+    qx.strokeStyle=col.rule; qx.setLineDash([2,3]);
+    qx.beginPath(); qx.moveTo(x1,y-qh*0.12); qx.lineTo(x1,y+qh*0.10); qx.stroke();
+    qx.setLineDash([]);
+    const pulse=0.5+0.5*Math.sin(qT*1.3);
+    [["impaired",r.lo,col.accent2],["not impaired",r.hi,col.accent]].forEach(([nm,v,c],k)=>{
+      const x=x0+(x1-x0)*v;
+      qx.fillStyle=c; qx.globalAlpha=(.25+.75*qm)*(0.55+0.45*pulse);
+      qx.beginPath(); qx.arc(x,y,5,0,Math.PI*2); qx.fill();
+      qx.globalAlpha=.25+.75*qm;
+      if(i===1) lab(qx,x,y+qh*0.19,nm,c,9.5,"center");
+    });
+  });
+  lab(qx,qw*0.17,qh*0.26,"both groups pinned at the top",col.muted,9.5);
+  lab(qx,qw*0.17,qh*0.95,"separated, p < 0.0001",col.accent,9.5);
+}
+function qPrev(){
+  lab(qx,qw*0.04,qh*0.15,"81% of the cohort, one side of the line",col.ink,11);
+  const cols=26, rows=4, x0=qw*0.05, y0=qh*0.38, dx=(qw*0.90)/cols, dy=qh*0.16;
+  let n=0;
+  for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+    const idx=r*cols+c, imp = idx < Math.round(cols*rows*0.81);
+    const x=x0+c*dx+dx/2, y=y0+r*dy;
+    const tw=(Math.sin(qT*1.2+idx*0.18)+1)/2;
+    qx.fillStyle=imp?col.accent2:col.accent;
+    qx.globalAlpha=(.25+.75*qm)*(imp?0.30+0.22*tw:1);
+    qx.beginPath(); qx.arc(x,y,imp?3:4.4,0,Math.PI*2); qx.fill();
+    qx.globalAlpha=.25+.75*qm;
+    if(imp) n++;
+  }
+  lab(qx,qw*0.05,qh*0.95,"impaired, 81%",col.accent2,10);
+  lab(qx,qw*0.95,qh*0.95,"not impaired, 19%",col.accent,10,"right");
+}
+function qSides(){
+  const midX=qw*0.5;
+  qx.strokeStyle=col.rule; qx.lineWidth=1;
+  qx.beginPath(); qx.moveTo(midX,qh*0.12); qx.lineTo(midX,qh*0.92); qx.stroke();
+  lab(qx,qw*0.04,qh*0.17,"heart",col.ink,11);
+  lab(qx,qw*0.54,qh*0.17,"brain",col.ink,11);
+  const L=["NT-proBNP","NYHA class","ejection fraction"];
+  const R=["MoCA","MMSE"];
+  L.forEach((n,i)=>chip(qx,qw*0.04,qh*(0.32+i*0.21),qw*0.40,qh*0.17,n,"plain"));
+  R.forEach((n,i)=>chip(qx,qw*0.54,qh*(0.32+i*0.21),qw*0.40,qh*0.17,n,"plain"));
+  const pulse=0.5+0.5*Math.sin(qT*2.0);
+  qx.save(); qx.globalAlpha=(.25+.75*qm)*pulse;
+  chip(qx,qw*0.54,qh*0.74,qw*0.40,qh*0.17,"white matter ?","ghost");
+  qx.restore();
+  lab(qx,qw*0.04,qh*0.95,"continuous, assayed",col.accent,9.5);
+}
+
+// ---- page 2: three instruments on one truth
+const cc=document.getElementById("cap"), cx=cc.getContext("2d");
+let cw2=0,ch2=0,prev=0.81,seed=42,cT=0,res=null,anim=[0,0,0];
+function capResize(){ const r=fitCanvas(cc); if(r){ cw2=r.width; ch2=r.height; } }
+function compute(){
+  const n=400, r=rng(seed);
+  const X=[],Y=[];
+  for(let i=0;i<n;i++){
+    const x=gauss(r);
+    X.push(x);
+    Y.push(0.62*x + gauss(r)*Math.sqrt(1-0.62*0.62));
+  }
+  // ordinal: map latent onto a 30-point score, rounded (MoCA-like, with a ceiling)
+  const ORD = X.map(x=>{
+    const v = 25.5 - x*3.2;               // higher injury -> lower score
+    return Math.max(0, Math.min(30, Math.round(v)));
+  });
+  // binary: threshold the ordinal score so that the stated share is "impaired"
+  const sorted=[...ORD].sort((a,b)=>a-b);
+  const cut = sorted[Math.floor(prev*n)];
+  const BIN = ORD.map(v=> v<=cut ? 1 : 0);
+  const r2 = a => { const c=pear(a,Y); return c*c; };
+  return { cont:r2(X), ord:r2(ORD), bin:r2(BIN), cut:cut };
+}
+function recompute(){ res=compute(); }
+function capFrame(){
+  if(!cw2) return;
+  cT+=dt;
+  if(!res) recompute();
+  const tgt=[res.bin,res.ord,res.cont];
+  for(let i=0;i<3;i++) anim[i]+=(tgt[i]-anim[i])*Math.min(1,dt*4);
+  cx.clearRect(0,0,cw2,ch2);
+  const base=ch2*0.80, top=ch2*0.18, bw=cw2*0.17;
+  const maxv=0.45;
+  cx.strokeStyle=col.rule; cx.lineWidth=1;
+  for(let i=0;i<=3;i++){
+    const y=base-(base-top)*(i/3);
+    cx.beginPath(); cx.moveTo(cw2*0.06,y); cx.lineTo(cw2*0.96,y); cx.stroke();
+    lab(cx,cw2*0.05,y,(maxv*i/3).toFixed(2),col.muted,9.5,"right");
+  }
+  const items=[
+    {x:cw2*0.16,t:"binary label",c:col.muted,s:"impaired / not"},
+    {x:cw2*0.42,t:"30-point score",c:col.accent2,s:"ordinal"},
+    {x:cw2*0.68,t:"continuous marker",c:col.accent,s:"imaging"}
+  ];
+  items.forEach((it,i)=>{
+    const h=(base-top)*Math.min(1,anim[i]/maxv);
+    cx.fillStyle=it.c; cx.globalAlpha=.5; cx.fillRect(it.x,base-h,bw,h);
+    cx.globalAlpha=1; cx.strokeStyle=it.c; cx.strokeRect(it.x,base-h,bw,h);
+    lab(cx,it.x+bw/2,base-h-13,anim[i].toFixed(3),it.c,12,"center");
+    lab(cx,it.x+bw/2,base+16,it.t,col.ink,10,"center");
+    lab(cx,it.x+bw/2,base+31,it.s,col.muted,9.5,"center");
+  });
+  lab(cx,cw2*0.06,ch2*0.09,"variance of the outcome explained",col.ink,11);
+}
+function press(id,on){ document.getElementById(id).setAttribute("aria-pressed",on?"true":"false"); }
+function upd(){
+  press("p-50",prev===0.5); press("p-81",prev===0.81);
+  recompute();
+  const lost=(1-res.bin/res.cont)*100;
+  document.getElementById("hint").textContent =
+    "at "+Math.round(prev*100)+"% prevalence the binary label discards about "+
+    lost.toFixed(0)+"% of what the continuous marker explains.";
+}
+document.getElementById("p-50").onclick=()=>{prev=0.5;upd();};
+document.getElementById("p-81").onclick=()=>{prev=0.81;upd();};
+document.getElementById("redraw").onclick=()=>{seed=(seed*7919+13)%100000;upd();};
+upd();
+
+
+const P = [[0.13,0.70],[0.39,0.28],[0.63,0.64],[0.88,0.26]];
+const SEG = 110;
+const cv = document.getElementById("c"), ctx = cv.getContext("2d");
+const nodes = [...document.querySelectorAll(".node")];
+const kEl = document.getElementById("k"), tEl = document.getElementById("t"), dEl = document.getElementById("d");
+let W=0,H=0,path=[],sel=0,pos=0,target=0,col={};
+let last = performance.now(), dt = 1/60;
+
+function readColors(){
+  const s = getComputedStyle(document.documentElement);
+  col = {rule:s.getPropertyValue("--rule").trim(),accent:s.getPropertyValue("--accent").trim(),
+    accent2:s.getPropertyValue("--accent-2").trim(),muted:s.getPropertyValue("--muted").trim(),
+    panel:s.getPropertyValue("--panel").trim(),ink:s.getPropertyValue("--ink").trim(),
+    paper:s.getPropertyValue("--paper").trim()};
+}
+function catmull(p0,p1,p2,p3,t){
+  const t2=t*t,t3=t2*t;
+  return [0.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),
+          0.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)];
+}
+function buildPath(){
+  path=[]; const pts=[P[0],...P,P[P.length-1]];
+  for(let i=1;i<pts.length-2;i++)
+    for(let j=0;j<SEG;j++){ const q=catmull(pts[i-1],pts[i],pts[i+1],pts[i+2],j/SEG); path.push([q[0]*W,q[1]*H]); }
+  path.push([P[P.length-1][0]*W,P[P.length-1][1]*H]);
+}
+function fitCanvas(el){
+  if(!el) return null;
+  const r = el.getBoundingClientRect();
+  if(!r.width || !r.height) return null;
+  const dpr = Math.min(window.devicePixelRatio||1,2);
+  el.width = Math.round(r.width*dpr); el.height = Math.round(r.height*dpr);
+  el.getContext("2d").setTransform(dpr,0,0,dpr,0,0);
+  return r;
+}
+function resize(){
+  const r = fitCanvas(cv); if(!r) return;
+  W = r.width; H = r.height; buildPath();
+  nodes.forEach((n,i)=>{ n.style.left=(P[i][0]*100)+"%"; n.style.top=(P[i][1]*100-(i%2?13:-13))+"%"; });
+}
+function drawStateSpace(){
+  ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle=col.rule; ctx.lineWidth=1; ctx.beginPath();
+  for(let i=1;i<6;i++){const x=W*i/6;ctx.moveTo(x,0);ctx.lineTo(x,H);}
+  for(let i=1;i<4;i++){const y=H*i/4;ctx.moveTo(0,y);ctx.lineTo(W,y);}
+  ctx.stroke();
+  ctx.strokeStyle=col.accent; ctx.globalAlpha=.34; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(path[0][0],path[0][1]);
+  for(const pt of path) ctx.lineTo(pt[0],pt[1]);
+  ctx.stroke(); ctx.globalAlpha=1;
+  P.forEach((p,i)=>{
+    const x=p[0]*W,y=p[1]*H,on=i===sel;
+    if(on){
+      ctx.strokeStyle=col.accent; ctx.globalAlpha=.4; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.arc(x,y,13,0,Math.PI*2); ctx.stroke();
+      ctx.globalAlpha=.18; ctx.beginPath(); ctx.arc(x,y,20,0,Math.PI*2); ctx.stroke(); ctx.globalAlpha=1;
+    }
+    ctx.fillStyle=on?col.accent:col.muted; ctx.globalAlpha=on?1:.5;
+    ctx.beginPath(); ctx.arc(x,y,on?4.5:3,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=1;
+  });
+  pos += (target-pos)*0.075;
+  const idx=Math.max(0,Math.min(path.length-1,Math.round(pos)));
+  const d0=path[idx];
+  ctx.fillStyle=col.panel; ctx.beginPath(); ctx.arc(d0[0],d0[1],7,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle=col.accent2; ctx.beginPath(); ctx.arc(d0[0],d0[1],4,0,Math.PI*2); ctx.fill();
+}
+function select(i){
+  sel=i; target=i*SEG;
+  const d=DATA[i]; kEl.textContent=d.k; tEl.textContent=d.t; dEl.innerHTML=d.d;
+  nodes.forEach((n,j)=>n.setAttribute("aria-current",j===i?"true":"false"));
+}
+nodes.forEach(n=>n.addEventListener("click",()=>select(+n.dataset.i)));
+cv.addEventListener("click",e=>{
+  const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  let best=-1,bd=30;
+  P.forEach((p,i)=>{const d=Math.hypot(p[0]*W-mx,p[1]*H-my); if(d<bd){bd=d;best=i;}});
+  if(best>=0) select(best);
+});
+document.getElementById("cp").addEventListener("click",async e=>{
+  const btn=e.currentTarget;
+  try{ await navigator.clipboard.writeText("augustine0521@gmail.com"); btn.textContent="copied"; }
+  catch(_){ btn.textContent="select it"; }
+  setTimeout(()=>btn.textContent="copy",1500);
+});
+const navBtns=[...document.querySelectorAll("nav button")];
+const pageEls=[1,2,3].map(i=>document.getElementById("p"+i));
+function show(p){
+  pageEls.forEach((el,i)=>{ if(el) el.hidden = (i+1)!==p; });
+  navBtns.forEach(b=>b.setAttribute("aria-current", (+b.dataset.p)===p ? "true":"false"));
+  document.getElementById("sf").innerHTML = SF[p-1];
+  if(p===1) qResize();
+  if(p===2) capResize();
+  if(p===3) resize();
+  if(location.hash !== "#"+p) history.replaceState(null,"","#"+p);
+}
+navBtns.forEach(b=>b.addEventListener("click",()=>show(+b.dataset.p)));
+document.querySelectorAll(".track>button").forEach((b,i)=>{
+  b.addEventListener("click",()=>{
+    const tr=b.parentElement, open=tr.dataset.open==="true";
+    document.querySelectorAll(".track").forEach(t=>{t.dataset.open="false";t.querySelector("button").setAttribute("aria-expanded","false");});
+    if(!open){ tr.dataset.open="true"; b.setAttribute("aria-expanded","true"); qSelect(i); }
+  });
+});
+function frame(){
+  const now=performance.now();
+  dt=Math.min(0.05,(now-last)/1000); last=now;
+  if(W) drawStateSpace();
+  qFrame(); capFrame();
+  requestAnimationFrame(frame);
+}
+readColors();
+if(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").addEventListener)
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",readColors);
+new ResizeObserver(()=>{resize();qResize();capResize();}).observe(document.body);
+window.addEventListener("resize",()=>{resize();qResize();capResize();});
+select(0);
+qSelect(0);
+const hv=parseInt((location.hash||"").slice(1),10);
+show(hv>=1&&hv<=3?hv:1);
+requestAnimationFrame(frame);
+
+</script>
+
+</body>
+</html>
